@@ -56,6 +56,7 @@ func (p *Products) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		}
 
 		p.updateProducts(id, rw, r)
+		return
 	}
 
 	// catch all
@@ -89,6 +90,7 @@ func (p Products) updateProducts(id int, rw http.ResponseWriter, r *http.Request
 	p.l.Println("Handle PUT product")
 
 	prod := &data.Product{}
+
 	err := prod.FromJSON(r.Body)
 	if err != nil {
 		http.Error(rw, "Unable to unmarshal json", http.StatusBadRequest)
